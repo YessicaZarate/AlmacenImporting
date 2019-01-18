@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AlmacenImporting.Models.Products>
+﻿@model IEnumerable<AlmacenImporting.ViewModels.Products.IndexProdVM>
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Providers.ProvName)
+            @Html.DisplayNameFor(model => model.ProvName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Item)
@@ -41,7 +41,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Providers.ProvName)
+            @Html.DisplayFor(modelItem => item.ProvName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Item)
@@ -65,9 +65,9 @@
             @Html.DisplayFor(modelItem => item.DateAd)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProdId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProdId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProdId })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProducId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ProducId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ProducId })
         </td>
     </tr>
 }

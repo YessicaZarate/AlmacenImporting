@@ -10,7 +10,7 @@ using System.Web.Mvc;
 using AlmacenImporting.Models;
 using AlmacenImporting.Services;
 using AlmacenImporting.ViewModels.Products;
-
+using System.Collections;
 
 namespace AlmacenImporting.Controllers
 {
@@ -29,8 +29,29 @@ namespace AlmacenImporting.Controllers
         // GET: Products
         public async Task<ActionResult> Index()
         {
-            var products = db.Products.Include(p => p.Providers);
-            return View(await products.ToListAsync());
+            IEnumerable<Products> products = await _productsService.GetAll();
+            List<IndexProdVM> indexVMList = new List<IndexProdVM>();
+
+            foreach (var prod in products)
+            {
+                IndexProdVM IndVM = new IndexProdVM()
+                {
+                    ProducId = prod.ProdId,
+                    Item = prod.Item,
+                    Description = prod.Description,
+                    Qty = prod.Qty,
+                    Cost = prod.Cost,
+                    Price = prod.Price,
+                    ProvName = prod.ProviderName,
+                    Warranty = prod.Warranty
+                };
+
+                indexVMList.Add(IndVM);
+            }
+
+            return View(indexVMList);
+            //var products = db.Products.Include(p => p.Providers);
+            //return View(await products.ToListAsync());
         }
 
         // GET: Products/Details/5
@@ -84,7 +105,7 @@ namespace AlmacenImporting.Controllers
                     Price = model.Price,
                     Warranty = model.Warranty,
                     DateAd = model.DateAd,
-                    ProvId = model.ProvidId
+                    ProvId = model.ProvidId,
                     
                 };
 

@@ -144,7 +144,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlmacenImportingContext.cs" />
-    <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Providers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +151,8 @@
     <Compile Include="Services\ProvidersService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="ViewModels\Products\CreateProductsVM.cs" />
+    <Compile Include="ViewModels\Products\IndexProdVM.cs" />
+    <Compile Include="ViewModels\Providers\IndexVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

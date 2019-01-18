@@ -47,5 +47,13 @@ namespace AlmacenImporting.Models
         public int Warranty { get; set; } //In weeks
 
         public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
+
+        public string ProviderName
+        {
+            get
+            {
+                return Providers.ProvName;
+            }
+        }
     }
 }

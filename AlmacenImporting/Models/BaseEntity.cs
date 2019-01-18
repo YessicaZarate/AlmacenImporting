@@ -7,8 +7,10 @@ namespace AlmacenImporting.Models
 {
     public class BaseEntity
     {
-        public DateTimeOffset? DateCreated { get; set; } //Creation date for the field
+        public DateTimeOffset? DateCreated { get; set; } 
+        //Creation date for the field
 
-        public DateTimeOffset? DateUpdated { get; set; }//Updating date for the field
+        public DateTimeOffset? DateUpdated { get; set; }
+        //Updating date for the field
     }
 }
