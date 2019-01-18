@@ -138,6 +138,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901181603135_Trial.cs" />
+    <Compile Include="Migrations\201901181603135_Trial.Designer.cs">
+      <DependentUpon>201901181603135_Trial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlmacenImportingContext.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Products.cs" />
@@ -210,6 +215,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201901181603135_Trial.resx">
+      <DependentUpon>201901181603135_Trial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -13,7 +13,7 @@ namespace AlmacenImporting.Services
     {
         public async Task<Providers> Get(int id)
         {
-            return await dbset.FirstOrDefaultAsync(g => g.ProdId == id);
+            return await dbset.FirstOrDefaultAsync(g => g.Id == id);
         }
 
         public async Task<IEnumerable<Providers>> GetAll()
