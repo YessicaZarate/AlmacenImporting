@@ -1,4 +1,4 @@
-﻿@model AlmacenImporting.Models.Products
+﻿@model AlmacenImporting.ViewModels.Products.DeleteProdVM
 
 @{
     ViewBag.Title = "Delete";
@@ -12,11 +12,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Providers.ProvName)
+            @Html.DisplayNameFor(model => model.ProviderName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Providers.ProvName)
+            @Html.DisplayFor(model => model.ProviderName)
         </dd>
 
         <dt>
@@ -28,7 +28,15 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Item)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand)
         </dt>
 
         <dd>

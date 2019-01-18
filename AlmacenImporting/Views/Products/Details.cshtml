@@ -1,4 +1,4 @@
-﻿@model AlmacenImporting.Models.Products
+﻿@model AlmacenImporting.ViewModels.Products.DetailsProdVM
 
 @{
     ViewBag.Title = "Details";
@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Providers.ProvName)
+            @Html.DisplayNameFor(model => model.ProviderName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Providers.ProvName)
+            @Html.DisplayFor(model => model.ProviderName)
         </dd>
 
         <dt>
@@ -24,6 +24,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.Item)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brand)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brand)
         </dd>
 
         <dt>
@@ -77,6 +85,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProdId }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ProducId }) |*@
     @Html.ActionLink("Back to List", "Index")
 </p>

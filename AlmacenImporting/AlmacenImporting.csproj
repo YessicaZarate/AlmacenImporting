@@ -142,6 +142,14 @@
     <Compile Include="Migrations\201901181603135_Trial.Designer.cs">
       <DependentUpon>201901181603135_Trial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901181852086_Dates.cs" />
+    <Compile Include="Migrations\201901181852086_Dates.Designer.cs">
+      <DependentUpon>201901181852086_Dates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901181904580_Brand.cs" />
+    <Compile Include="Migrations\201901181904580_Brand.Designer.cs">
+      <DependentUpon>201901181904580_Brand.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AlmacenImportingContext.cs" />
     <Compile Include="Models\Products.cs" />
@@ -151,6 +159,9 @@
     <Compile Include="Services\ProvidersService.cs" />
     <Compile Include="Services\ServiceBase.cs" />
     <Compile Include="ViewModels\Products\CreateProductsVM.cs" />
+    <Compile Include="ViewModels\Products\DeleteProdVM.cs" />
+    <Compile Include="ViewModels\Products\DetailsProdVM.cs" />
+    <Compile Include="ViewModels\Products\EditProdVM.cs" />
     <Compile Include="ViewModels\Products\IndexProdVM.cs" />
     <Compile Include="ViewModels\Providers\IndexVM.cs" />
   </ItemGroup>
@@ -220,6 +231,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901181603135_Trial.resx">
       <DependentUpon>201901181603135_Trial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901181852086_Dates.resx">
+      <DependentUpon>201901181852086_Dates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901181904580_Brand.resx">
+      <DependentUpon>201901181904580_Brand.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

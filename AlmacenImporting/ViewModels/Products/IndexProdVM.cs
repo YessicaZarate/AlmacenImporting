@@ -16,12 +16,13 @@ namespace AlmacenImporting.ViewModels.Products
         [Display(Name = "Item:")]
         public string Item { get; set; }
 
-        //public string Brand { get; set; }
+        [Display(Name = "Brand:")]
+        public string Brand { get; set; }
 
         [Display(Name = "Description:")]
         public string Description { get; set; }
 
-        [Display(Name = "Quantity:")]
+        [Display(Name = "Quantity in stock:")]
         public int Qty { get; set; } //In stock
 
         [Display(Name = "Cost:")]
@@ -32,18 +33,18 @@ namespace AlmacenImporting.ViewModels.Products
         [DisplayFormat(DataFormatString = "{0:c}")]
         public double Price { get; set; }
 
-        //public int LocId { get; set; }
-        [Display(Name = "Provider:")]
-        public string ProvName { get; set; }
+        ////public int LocId { get; set; }
+        //[Display(Name = "Provider:")]
+        //public string ProvName { get; set; }
 
-        //public int BrandId { get; set; }
+        ////public int BrandId { get; set; }
 
-        //public int LocationId { get; set; }
-        [Display(Name = "Warranty (in weeks):")]
-        public int Warranty { get; set; } //In weeks
+        ////public int LocationId { get; set; }
+        //[Display(Name = "Warranty (in weeks):")]
+        //public int Warranty { get; set; } //In weeks
 
-        [Display(Name = "Acquisition Date (dd/mm/yyyy):")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
+        //[Display(Name = "Acquisition Date (dd/mm/yyyy):")]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        //public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
     }
 }

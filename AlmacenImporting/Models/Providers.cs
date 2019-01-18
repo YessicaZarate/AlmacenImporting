@@ -14,5 +14,11 @@ namespace AlmacenImporting.Models
         public string ProvName { get; set; }
 
         public string Notes { get; set; }
+
+        public DateTimeOffset? DateCreated { get; set; }
+        //Creation date for the field
+
+        public DateTimeOffset? DateUpdated { get; set; }
+        //Updating date for the field
     }
 }

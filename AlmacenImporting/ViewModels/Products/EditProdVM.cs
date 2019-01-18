@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace AlmacenImporting.ViewModels.Products
 {
-    public class CreateProductsVM
+    public class EditProdVM
     {
         [Key]
         public int ProducId { get; set; }
@@ -50,13 +50,13 @@ namespace AlmacenImporting.ViewModels.Products
         public int Warranty { get; set; } //In weeks
 
         [Required]
-        [Display(Name = "Acquisition Date (dd/mm/yyyy):")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Display(Name = "Acquisition Date:")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
 
         //[Required]
-        //[Display(Name = "Date Created:")]
+        //[Display(Name = "Date Updated:")]
         //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        //public DateTimeOffset? DateCreated { get; set; }
+        //public DateTimeOffset? DateUpdated { get; set; }
     }
 }

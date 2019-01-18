@@ -14,7 +14,7 @@ namespace AlmacenImporting.Models
 
         public string Item { get; set; }
 
-        //public string Brand { get; set; }
+        public string Brand { get; set; }
 
         public string Description { get; set; }
 
@@ -47,6 +47,12 @@ namespace AlmacenImporting.Models
         public int Warranty { get; set; } //In weeks
 
         public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
+
+        public DateTimeOffset? DateCreated { get; set; }
+        //Creation date for the field
+
+        public DateTimeOffset? DateUpdated { get; set; }
+        //Updating date for the field
 
         public string ProviderName
         {

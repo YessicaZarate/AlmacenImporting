@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace AlmacenImporting.ViewModels.Products
 {
-    public class CreateProductsVM
+    public class DetailsProdVM
     {
         [Key]
         public int ProducId { get; set; }
@@ -29,22 +29,18 @@ namespace AlmacenImporting.ViewModels.Products
         public int Qty { get; set; } //In stock
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:c}")]
         [Display(Name = "Cost:")]
         public double Cost { get; set; }
 
         [Required]
+        [DisplayFormat(DataFormatString = "{0:c}")]
         [Display(Name = "Sale Price:")]
         public double Price { get; set; }
 
-        //public int LocId { get; set; }
         [Display(Name = "Provider:")]
-        [Required]
-        public int ProvidId { get; set; }
-        public IEnumerable<SelectListItem> Providers { get; set; }
+        public string ProviderName { get; set; }
 
-        //public int BrandId { get; set; }
-
-        //public int LocationId { get; set; }
         [Required]
         [Display(Name = "Warranty (in weeks):")]
         public int Warranty { get; set; } //In weeks
@@ -54,9 +50,14 @@ namespace AlmacenImporting.ViewModels.Products
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTimeOffset? DateAd { get; set; } //Date when the items arrived
 
-        //[Required]
-        //[Display(Name = "Date Created:")]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        //public DateTimeOffset? DateCreated { get; set; }
+        [Required]
+        [Display(Name = "Date Created:")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTimeOffset? DateCreated { get; set; }
+
+        [Required]
+        [Display(Name = "Date Updated:")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTimeOffset? DateUpdated { get; set; }
     }
 }
