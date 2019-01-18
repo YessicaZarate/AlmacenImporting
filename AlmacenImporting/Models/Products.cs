@@ -31,7 +31,6 @@ namespace AlmacenImporting.Models
         //public int BrandId { get; set; }
 
         public int ProvId { get; set; }
-
         [ForeignKey("ProvId")]
         public virtual Providers Providers { get; set; }
 

@@ -9,7 +9,7 @@ namespace AlmacenImporting.Models
     public class Providers
     {
         [Key]
-        public int ProvId { get; set; }
+        public int Id { get; set; }
 
         public string ProvName { get; set; }
 

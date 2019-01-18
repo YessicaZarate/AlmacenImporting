@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using AlmacenImporting.Models;
 using AlmacenImporting.Services;
+using AlmacenImporting.ViewModels.Products;
+
 
 namespace AlmacenImporting.Controllers
 {
@@ -47,10 +49,21 @@ namespace AlmacenImporting.Controllers
         }
 
         // GET: Products/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
-            return View();
+            CreateProductsVM model = new CreateProductsVM();
+
+            var providers = await _providersService.GetAll();
+
+            model.Providers = providers.Select(l => new SelectListItem()
+            {
+                Text = l.ProvName,
+               Value = l.Id.ToString()
+            });
+            model.ProvidId = providers != null && providers.Any() ? providers.First().Id : 0;
+
+            //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
+            return View(model);
         }
 
         // POST: Products/Create
@@ -58,17 +71,43 @@ namespace AlmacenImporting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProdId,Item,Description,Qty,Cost,Price,ProvId,Warranty,DateAd")] Products products)
+        public async Task<ActionResult> Create(CreateProductsVM model)
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(products);
-                await db.SaveChangesAsync();
+                Products newprod = new Products()
+                {
+                    Item = model.Item,
+                    Description = model.Description,
+                    Qty = model.Qty,
+                    Cost = model.Cost,
+                    Price = model.Price,
+                    Warranty = model.Warranty,
+                    DateAd = model.DateAd,
+                    ProvId = model.ProvidId
+                    
+                };
+
+                try
+                {
+                    await _productsService.Create(newprod);
+
+                    TempData.Add("SuccessMsg", "The new product was created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    // Add message to the user
+                    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
+                    throw;
+                }
                 return RedirectToAction("Index");
+                //db.Products.Add(products);
+                //await db.SaveChangesAsync();
+                //return RedirectToAction("Index");
             }
 
-            ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName", products.ProvId);
-            return View(products);
+            //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName", products.ProvId);
+            return View(model);
         }
 
         // GET: Products/Edit/5

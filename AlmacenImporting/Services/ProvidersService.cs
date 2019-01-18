@@ -9,19 +9,19 @@ using AlmacenImporting.ViewModels;
 
 namespace AlmacenImporting.Services
 {
-    public class ProvidersService : ServiceBase<Products> // IServiceBase<Employee>
+    public class ProvidersService : ServiceBase<Providers> // IServiceBase<Employee>
     {
-        public async Task<Products> Get(int id)
+        public async Task<Providers> Get(int id)
         {
             return await dbset.FirstOrDefaultAsync(g => g.ProdId == id);
         }
 
-        public async Task<IEnumerable<Products>> GetAll()
+        public async Task<IEnumerable<Providers>> GetAll()
         {
             return await dbset.ToListAsync();
         }
 
-        public async Task<int> Update(Products entity)
+        public async Task<int> Update(Providers entity)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace AlmacenImporting.Services
             }
         }
 
-        public async Task<int> Create(Products entity)
+        public async Task<int> Create(Providers entity)
         {
             try
             {

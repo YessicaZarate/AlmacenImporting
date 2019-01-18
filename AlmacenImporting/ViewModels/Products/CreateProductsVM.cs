@@ -11,7 +11,7 @@ namespace AlmacenImporting.ViewModels.Products
     public class CreateProductsVM
     {
         [Key]
-        public int ProdId { get; set; }
+        public int ProducId { get; set; }
 
         public string Item { get; set; }
 
@@ -25,14 +25,14 @@ namespace AlmacenImporting.ViewModels.Products
 
         public double Price { get; set; }
 
-        public int LocId { get; set; }
+        //public int LocId { get; set; }
 
-        public int ProvId { get; set; }
+        public int ProvidId { get; set; }
+        public IEnumerable<SelectListItem> Providers { get; set; }
 
-        public int BrandId { get; set; }
+        //public int BrandId { get; set; }
 
-        public int LocationId { get; set; }
-        public IEnumerable<SelectListItem> Locations { get; set; }
+        //public int LocationId { get; set; }
 
         public int Warranty { get; set; } //In weeks
 
