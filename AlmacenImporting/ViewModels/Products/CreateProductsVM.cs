@@ -42,6 +42,11 @@ namespace AlmacenImporting.ViewModels.Products
         public int ProvidId { get; set; }
         public IEnumerable<SelectListItem> Providers { get; set; }
 
+        [Display(Name = "Source Country:")]
+        [Required]
+        public int LocId { get; set; }
+        public IEnumerable<SelectListItem> Locations { get; set; }
+
         //public int BrandId { get; set; }
 
         //public int LocationId { get; set; }

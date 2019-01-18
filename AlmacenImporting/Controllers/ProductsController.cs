@@ -20,11 +20,13 @@ namespace AlmacenImporting.Controllers
 
         private ProductsService _productsService;
         private ProvidersService _providersService;
+        private LocationService _locationService;
 
         public ProductsController()
         {
             this._productsService = new ProductsService();
             this._providersService = new ProvidersService();
+            this._locationService = new LocationService();
         }
 
         // GET: Products
@@ -76,6 +78,7 @@ namespace AlmacenImporting.Controllers
             detail.Cost = products.Cost;
             detail.Price = products.Price;
             detail.ProviderName = products.ProviderName;
+            detail.LocationsName = products.LocationName;
             detail.Warranty = products.Warranty;
             detail.DateAd = products.DateAd;
             detail.DateCreated = products.DateCreated;
@@ -97,6 +100,16 @@ namespace AlmacenImporting.Controllers
                Value = l.Id.ToString()
             });
             model.ProvidId = providers != null && providers.Any() ? providers.First().Id : 0;
+
+
+            var locations = await _locationService.GetAll();
+
+            model.Locations = locations.Select(l => new SelectListItem()
+            {
+                Text = l.LocName,
+                Value = l.Id.ToString()
+            });
+            model.LocId = providers != null && providers.Any() ? providers.First().Id : 0;
 
             //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
             return View(model);

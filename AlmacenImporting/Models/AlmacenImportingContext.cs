@@ -22,5 +22,7 @@ namespace AlmacenImporting.Models
         public System.Data.Entity.DbSet<AlmacenImporting.Models.Providers> Providers { get; set; }
 
         public System.Data.Entity.DbSet<AlmacenImporting.Models.Products> Products { get; set; }
+
+        public System.Data.Entity.DbSet<AlmacenImporting.Models.Locations> Locations { get; set; }
     }
 }

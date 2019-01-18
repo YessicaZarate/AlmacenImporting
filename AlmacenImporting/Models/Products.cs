@@ -34,6 +34,10 @@ namespace AlmacenImporting.Models
         [ForeignKey("ProvId")]
         public virtual Providers Providers { get; set; }
 
+        public int LocId { get; set; }
+        [ForeignKey("LocId")]
+        public virtual Locations Locations { get; set; }
+
         //[ForeignKey("ProvId")]
         //public virtual Providers Providers { get; set; }
 
@@ -59,6 +63,13 @@ namespace AlmacenImporting.Models
             get
             {
                 return Providers.ProvName;
+            }
+        }
+        public string LocationName
+        {
+            get
+            {
+                return Locations.LocName;
             }
         }
     }

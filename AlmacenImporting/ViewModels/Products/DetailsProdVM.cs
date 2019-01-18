@@ -41,6 +41,9 @@ namespace AlmacenImporting.ViewModels.Products
         [Display(Name = "Provider:")]
         public string ProviderName { get; set; }
 
+        [Display(Name = "Source Country:")]
+        public string LocationsName { get; set; }
+
         [Required]
         [Display(Name = "Warranty (in weeks):")]
         public int Warranty { get; set; } //In weeks

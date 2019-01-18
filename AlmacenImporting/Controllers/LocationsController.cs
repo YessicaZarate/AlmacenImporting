@@ -9,38 +9,34 @@ using System.Web;
 using System.Web.Mvc;
 using AlmacenImporting.Models;
 using AlmacenImporting.Services;
-using AlmacenImporting.ViewModels.Providers;
-using System.Collections;
-
+using AlmacenImporting.ViewModels.Locations;
 
 namespace AlmacenImporting.Controllers
 {
-    public class ProvidersController : Controller
+    public class LocationsController : Controller
     {
         //private AlmacenImportingContext db = new AlmacenImportingContext();
 
-        private ProductsService _productsService;
-        private ProvidersService _providersService;
+        private LocationService _locationService;
 
-        public ProvidersController()
+        public LocationsController()
         {
-            this._productsService = new ProductsService();
-            this._providersService = new ProvidersService();
+            this._locationService = new LocationService();
         }
 
-        // GET: Providers
+        // GET: Locations
         public async Task<ActionResult> Index()
         {
-            IEnumerable<Providers> products = await _providersService.GetAll();
-            List<IndexVM> indexVMList = new List<IndexVM>();
+            IEnumerable<Locations> products = await _locationService.GetAll();
+            List<IndexLocVM> indexVMList = new List<IndexLocVM>();
 
-            foreach (var prov in products)
+            foreach (var loc in products)
             {
-                IndexVM IndVM = new IndexVM()
+                IndexLocVM IndVM = new IndexLocVM()
                 {
-                  Id = prov.Id,
-                  ProvName = prov.ProvName,
-                  Notes = prov.Notes
+                    Id = loc.Id,
+                    LocationName = loc.LocName,
+                    Notes = loc.Notes
                 };
 
                 indexVMList.Add(IndVM);
@@ -49,56 +45,56 @@ namespace AlmacenImporting.Controllers
             return View(indexVMList);
         }
 
-        // GET: Providers/Details/5
+        // GET: Locations/Details/5
         public async Task<ActionResult> Details(int? id)
         {
-            DetailsProvVM detail = new DetailsProvVM();
+            DetailsLocVM detail = new DetailsLocVM();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Providers providers = await _providersService.Get(id.Value);
-            if (providers == null)
+            Locations locations = await _locationService.Get(id.Value);
+            if (locations == null)
             {
                 return HttpNotFound();
             }
 
-            detail.Id = providers.Id;
-            detail.ProvName = providers.ProvName;
-            detail.Notes = providers.Notes;
-            detail.DateCreated = providers.DateCreated;
-            detail.DateUpdated = providers.DateUpdated;
+            detail.Id = locations.Id;
+            detail.LocationsName = locations.LocName;
+            detail.Notes = locations.Notes;
+            detail.DateCreated = locations.DateCreated;
+            detail.DateUpdated = locations.DateUpdated;
 
             return View(detail);
         }
 
-        // GET: Providers/Create
+        // GET: Locations/Create
         public ActionResult Create()
         {
-            CreateProvVM model = new CreateProvVM();
+            CreateLocVM model = new CreateLocVM();
             //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
             return View(model);
         }
 
-        // POST: Providers/Create
+        // POST: Locations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateProvVM model)
+        public async Task<ActionResult> Create(CreateLocVM model)
         {
             if (ModelState.IsValid)
             {
-                Providers newprov = new Providers()
+                Locations newloc = new Locations()
                 {
-                    ProvName = model.ProvName,
+                    LocName = model.LocationName,
                     Notes = model.Notes,
                     DateCreated = DateTimeOffset.Now
                 };
 
                 try
                 {
-                    await _providersService.Create(newprov);
+                    await _locationService.Create(newloc);
 
                     TempData.Add("SuccessMsg", "The new provider was created successfully!");
                 }
@@ -109,81 +105,77 @@ namespace AlmacenImporting.Controllers
                     throw;
                 }
                 return RedirectToAction("Index");
-                //db.Products.Add(products);
-                //await db.SaveChangesAsync();
-                //return RedirectToAction("Index");
             }
-
-            //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName", products.ProvId);
+            
             return View(model);
         }
 
-        // GET: Providers/Edit/5
+        // GET: Locations/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
-            EditProvVM model = new EditProvVM();
-            Providers providers = await _providersService.Get(id.Value);
+            EditLocVM model = new EditLocVM();
+            Locations locations = await _locationService.Get(id.Value);
 
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (providers == null)
+            if (locations == null)
             {
                 return HttpNotFound();
             }
-            model.Id = providers.Id;
-            model.ProvName = providers.ProvName;
-            model.Notes = providers.Notes;
-            
+            model.Id = locations.Id;
+            model.LocationName = locations.LocName;
+            model.Notes = locations.Notes;
+
             return View(model);
         }
 
-        // POST: Providers/Edit/5
+        // POST: Locations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(EditProvVM model, int? id)
+        public async Task<ActionResult> Edit(EditLocVM model, int? id)
         {
             if (ModelState.IsValid)
             {
-                Providers existingProvider = await _providersService.Get(id.Value);
-                if (existingProvider != null)
+                Locations existingLocation = await _locationService.Get(id.Value);
+                if (existingLocation != null)
                 {
-                    existingProvider.ProvName = model.ProvName;
-                    existingProvider.Notes = model.Notes;
-                    existingProvider.DateUpdated = DateTimeOffset.Now;
+                    existingLocation.LocName = model.LocationName;
+                    existingLocation.Notes = model.Notes;
+                    existingLocation.DateUpdated = DateTimeOffset.Now;
                 }
                 else
                 {
                     return HttpNotFound();
                 }
-                await _providersService.Update(existingProvider);
+                await _locationService.Update(existingLocation);
                 return RedirectToAction("Index");
-               
+
             }
- 
+
             return View(model);
         }
 
-        // GET: Providers/Delete/5
+        // GET: Locations/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
-            DeleteProvVM deleteVM = new DeleteProvVM();
+            DeleteLocVM deleteVM = new DeleteLocVM();
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Providers providers = await _providersService.Get(id.Value);
+            Locations providers = await _locationService.Get(id.Value);
             if (providers == null)
             {
                 return HttpNotFound();
             }
             deleteVM.Id = providers.Id;
-            deleteVM.ProvName = providers.ProvName;
+            deleteVM.LocationsName = providers.LocName;
             deleteVM.Notes = providers.Notes;
             deleteVM.DateCreated = providers.DateCreated;
             deleteVM.DateUpdated = providers.DateUpdated;
@@ -191,13 +183,13 @@ namespace AlmacenImporting.Controllers
             return View(deleteVM);
         }
 
-        // POST: Providers/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var providers = await _providersService.Get(id);
-            await _providersService.Delete(id);
+            var locations = await _locationService.Get(id);
+            await _locationService.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -205,7 +197,7 @@ namespace AlmacenImporting.Controllers
         {
             if (disposing)
             {
-                _providersService.Dispose();
+                _locationService.Dispose();
             }
             base.Dispose(disposing);
         }
