@@ -1,4 +1,4 @@
-﻿@model AlmacenImporting.Models.Providers
+﻿@model AlmacenImporting.ViewModels.Providers.DetailsProvVM
 
 @{
     ViewBag.Title = "Details";
@@ -26,9 +26,25 @@
             @Html.DisplayFor(model => model.Notes)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateUpdated)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProvId }) |
+   @* @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Index")
 </p>

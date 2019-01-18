@@ -8,6 +8,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AlmacenImporting.Models;
+using AlmacenImporting.Services;
+using AlmacenImporting.ViewModels.Providers;
+using System.Collections;
+
 
 namespace AlmacenImporting.Controllers
 {
@@ -15,31 +19,65 @@ namespace AlmacenImporting.Controllers
     {
         private AlmacenImportingContext db = new AlmacenImportingContext();
 
+        private ProductsService _productsService;
+        private ProvidersService _providersService;
+
+        public ProvidersController()
+        {
+            this._productsService = new ProductsService();
+            this._providersService = new ProvidersService();
+        }
+
         // GET: Providers
         public async Task<ActionResult> Index()
         {
-            return View(await db.Providers.ToListAsync());
+            IEnumerable<Providers> products = await _providersService.GetAll();
+            List<IndexVM> indexVMList = new List<IndexVM>();
+
+            foreach (var prov in products)
+            {
+                IndexVM IndVM = new IndexVM()
+                {
+                  Id = prov.Id,
+                  ProvName = prov.ProvName,
+                  Notes = prov.Notes
+                };
+
+                indexVMList.Add(IndVM);
+            }
+
+            return View(indexVMList);
         }
 
         // GET: Providers/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            DetailsProvVM detail = new DetailsProvVM();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Providers providers = await db.Providers.FindAsync(id);
+            Providers providers = await _providersService.Get(id.Value);
             if (providers == null)
             {
                 return HttpNotFound();
             }
-            return View(providers);
+
+            detail.Id = providers.Id;
+            detail.ProvName = providers.ProvName;
+            detail.Notes = providers.Notes;
+            detail.DateCreated = providers.DateCreated;
+            detail.DateUpdated = providers.DateUpdated;
+
+            return View(detail);
         }
 
         // GET: Providers/Create
         public ActionResult Create()
         {
-            return View();
+            CreateProvVM model = new CreateProvVM();
+            //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
+            return View(model);
         }
 
         // POST: Providers/Create
@@ -47,31 +85,59 @@ namespace AlmacenImporting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ProvId,ProvName,Notes")] Providers providers)
+        public async Task<ActionResult> Create(CreateProvVM model)
         {
             if (ModelState.IsValid)
             {
-                db.Providers.Add(providers);
-                await db.SaveChangesAsync();
+                Providers newprov = new Providers()
+                {
+                    ProvName = model.ProvName,
+                    Notes = model.Notes,
+                    DateCreated = DateTimeOffset.Now
+                };
+
+                try
+                {
+                    await _providersService.Create(newprov);
+
+                    TempData.Add("SuccessMsg", "The new provider was created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    // Add message to the user
+                    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
+                    throw;
+                }
                 return RedirectToAction("Index");
+                //db.Products.Add(products);
+                //await db.SaveChangesAsync();
+                //return RedirectToAction("Index");
             }
 
-            return View(providers);
+            //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName", products.ProvId);
+            return View(model);
         }
 
         // GET: Providers/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+            EditProvVM model = new EditProvVM();
+            Providers providers = await _providersService.Get(id.Value);
+
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Providers providers = await db.Providers.FindAsync(id);
             if (providers == null)
             {
                 return HttpNotFound();
             }
-            return View(providers);
+            model.Id = providers.Id;
+            model.ProvName = providers.ProvName;
+            model.Notes = providers.Notes;
+            
+            return View(model);
         }
 
         // POST: Providers/Edit/5
@@ -79,30 +145,50 @@ namespace AlmacenImporting.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ProvId,ProvName,Notes")] Providers providers)
+        public async Task<ActionResult> Edit(EditProvVM model, int? id)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(providers).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                Providers existingProvider = await _providersService.Get(id.Value);
+                if (existingProvider != null)
+                {
+                    existingProvider.ProvName = model.ProvName;
+                    existingProvider.Notes = model.Notes;
+                    existingProvider.DateUpdated = DateTimeOffset.Now;
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
+                await _providersService.Update(existingProvider);
                 return RedirectToAction("Index");
+               
             }
-            return View(providers);
+ 
+            return View(model);
         }
 
         // GET: Providers/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
+            DeleteProvVM deleteVM = new DeleteProvVM();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Providers providers = await db.Providers.FindAsync(id);
+            Providers providers = await _providersService.Get(id.Value);
             if (providers == null)
             {
                 return HttpNotFound();
             }
-            return View(providers);
+            deleteVM.Id = providers.Id;
+            deleteVM.ProvName = providers.ProvName;
+            deleteVM.Notes = providers.Notes;
+            deleteVM.DateCreated = providers.DateCreated;
+            deleteVM.DateUpdated = providers.DateUpdated;
+
+            return View(deleteVM);
         }
 
         // POST: Providers/Delete/5
@@ -110,9 +196,8 @@ namespace AlmacenImporting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Providers providers = await db.Providers.FindAsync(id);
-            db.Providers.Remove(providers);
-            await db.SaveChangesAsync();
+            var providers = await _providersService.Get(id);
+            await _providersService.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -120,7 +205,7 @@ namespace AlmacenImporting.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _providersService.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -16,7 +16,8 @@ namespace AlmacenImporting.Controllers
 {
     public class ProductsController : Controller
     {
-        private AlmacenImportingContext db = new AlmacenImportingContext();
+        //private AlmacenImportingContext db = new AlmacenImportingContext();
+
         private ProductsService _productsService;
         private ProvidersService _providersService;
 

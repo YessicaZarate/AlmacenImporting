@@ -163,6 +163,10 @@
     <Compile Include="ViewModels\Products\DetailsProdVM.cs" />
     <Compile Include="ViewModels\Products\EditProdVM.cs" />
     <Compile Include="ViewModels\Products\IndexProdVM.cs" />
+    <Compile Include="ViewModels\Providers\CreateProvVM.cs" />
+    <Compile Include="ViewModels\Providers\DeleteProvVM.cs" />
+    <Compile Include="ViewModels\Providers\DetailsProvVM.cs" />
+    <Compile Include="ViewModels\Providers\EditProvVM.cs" />
     <Compile Include="ViewModels\Providers\IndexVM.cs" />
   </ItemGroup>
   <ItemGroup>

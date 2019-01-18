@@ -1,4 +1,4 @@
-﻿@model AlmacenImporting.Models.Providers
+﻿@model AlmacenImporting.ViewModels.Providers.DeleteProvVM
 
 @{
     ViewBag.Title = "Delete";
@@ -25,6 +25,22 @@
 
         <dd>
             @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateUpdated)
         </dd>
 
     </dl>
