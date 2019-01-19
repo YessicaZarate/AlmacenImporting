@@ -92,18 +92,19 @@ namespace AlmacenImporting.Controllers
                     DateCreated = DateTimeOffset.Now
                 };
 
-                try
-                {
-                    await _locationService.Create(newloc);
+                //try
+                //{
+                //    await _locationService.Create(newloc);
 
-                    TempData.Add("SuccessMsg", "The new provider was created successfully!");
-                }
-                catch (Exception ex)
-                {
-                    // Add message to the user
-                    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
-                    throw;
-                }
+                //    TempData.Add("SuccessMsg", "The new provider was created successfully!");
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Add message to the user
+                //    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
+                //    throw;
+                //}
+                await _locationService.Create(newloc);
                 return RedirectToAction("Index");
             }
             

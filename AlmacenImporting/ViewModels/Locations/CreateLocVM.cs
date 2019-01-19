@@ -12,7 +12,7 @@ namespace AlmacenImporting.ViewModels.Locations
     {
         public int Id { get; set; }
 
-        [Display(Name = "Provider Name:")]
+        [Display(Name = "Source Country:")]
         public string LocationName { get; set; }
 
         [Display(Name = "Notes:")]

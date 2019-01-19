@@ -96,18 +96,19 @@ namespace AlmacenImporting.Controllers
                     DateCreated = DateTimeOffset.Now
                 };
 
-                try
-                {
-                    await _providersService.Create(newprov);
+                //try
+                //{
+                //    await _providersService.Create(newprov);
 
-                    TempData.Add("SuccessMsg", "The new provider was created successfully!");
-                }
-                catch (Exception ex)
-                {
-                    // Add message to the user
-                    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
-                    throw;
-                }
+                //    TempData.Add("SuccessMsg", "The new provider was created successfully!");
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Add message to the user
+                //    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
+                //    throw;
+                //}
+                await _providersService.Create(newprov);
                 return RedirectToAction("Index");
                 //db.Products.Add(products);
                 //await db.SaveChangesAsync();

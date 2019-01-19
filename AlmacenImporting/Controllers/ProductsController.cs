@@ -109,7 +109,7 @@ namespace AlmacenImporting.Controllers
                 Text = l.LocName,
                 Value = l.Id.ToString()
             });
-            model.LocId = providers != null && providers.Any() ? providers.First().Id : 0;
+            model.LocId = locations != null && locations.Any() ? locations.First().Id : 0;
 
             //ViewBag.ProvId = new SelectList(db.Providers, "ProvId", "ProvName");
             return View(model);
@@ -135,21 +135,23 @@ namespace AlmacenImporting.Controllers
                     Warranty = model.Warranty,
                     DateAd = model.DateAd,
                     ProvId = model.ProvidId,
+                    LocId = model.LocId,
                     DateCreated = DateTimeOffset.Now
                 };
 
-                try
-                {
-                    await _productsService.Create(newprod);
+                //try
+                //{
+                //    await _productsService.Create(newprod);
 
-                    TempData.Add("SuccessMsg", "The new product was created successfully!");
-                }
-                catch (Exception ex)
-                {
-                    // Add message to the user
-                    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
-                    throw;
-                }
+                //    TempData.Add("SuccessMsg", "The new product was created successfully!");
+                //}
+                //catch (Exception ex)
+                //{
+                //    // Add message to the user
+                //    Console.WriteLine("An error has occurred. Message: " + ex.ToString());
+                //    throw;
+                //}
+                await _productsService.Create(newprod);
                 return RedirectToAction("Index");
                 //db.Products.Add(products);
                 //await db.SaveChangesAsync();
@@ -165,6 +167,7 @@ namespace AlmacenImporting.Controllers
         {
             EditProdVM model = new EditProdVM();
             var providers = await _providersService.GetAll();
+            var locations = await _locationService.GetAll();
 
             if (id == null)
             {
@@ -192,8 +195,16 @@ namespace AlmacenImporting.Controllers
                 Value = l.Id.ToString()
             });
             model.ProvidId = providers != null && providers.Any() ? providers.First().Id : 0;
-
             model.ProvidId = products.ProvId;
+
+
+            model.Locations = locations.Select(l => new SelectListItem()
+            {
+                Text = l.LocName,
+                Value = l.Id.ToString()
+            });
+            model.LocId = locations != null && locations.Any() ? locations.First().Id : 0;
+            model.LocId = products.LocId;
 
             return View(model);
         }
@@ -220,6 +231,7 @@ namespace AlmacenImporting.Controllers
                     existingProduct.DateAd = model.DateAd;
                     existingProduct.DateUpdated = DateTimeOffset.Now;
                     existingProduct.ProvId = model.ProvidId;
+                    existingProduct.LocId = model.LocId;
                 }
                 else
                 {
@@ -257,6 +269,7 @@ namespace AlmacenImporting.Controllers
             deleteVM.Cost = products.Cost;
             deleteVM.Price = products.Price;
             deleteVM.ProviderName = products.ProviderName;
+            deleteVM.LocationsName = products.LocationName;
             deleteVM.Warranty = products.Warranty;
             deleteVM.DateAd = products.DateAd;
             deleteVM.DateCreated = products.DateCreated;
